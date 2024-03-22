@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+p {
+  text-align: center;
+  font-size: 150px;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+}
+
+/* Blink animation */
+@keyframes blink {
+  0% { background-color: rgb(127,255,0); }
+  50% { background-color: red; }
+  100% { background-color: rgb(127,255,0); }
+}
+
+</style>
+</head>
+<body>
+
+<p id="demo"></p>
+
+<script>
+var currentDate = new Date();
+const currentHour = currentDate.getHours();
+
+// Array of month names
+var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+// Array of day names
+var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+// Get day, month, and year
+var day = currentDate.getDate();
+var monthIndex = currentDate.getMonth();
+var year = currentDate.getFullYear();
+
+// Format the date
+var formattedDate = monthNames[monthIndex] + " " + day + ", " + year;
+
+if (currentHour >= 8) {
+    var endTime = dayNames[currentDate.getDay()] === 'Friday' ? " 17:00:00" : " 18:00:00";
+    var countDownDate = new Date(formattedDate + endTime).getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+      // Get today's date and time
+      var now = new Date().getTime();
+        
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+        
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+      // Output the result in an element with id="demo"
+      document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+      + minutes + "m " + seconds + "s ";
+        
+      // If the count down is over, write some text 
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "CLOCK OUT NA!!!";
+        document.body.style.animation = 'blink 1s infinite';
+      }
+    }, 1000);
+}
+
+</script>
+
+</body>
+</html>
